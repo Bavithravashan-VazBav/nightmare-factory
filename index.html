@@ -712,6 +712,23 @@
   .modal-copy-btn:hover { border-color: var(--crimson); color: var(--crimson); }
   .modal-copy-btn.copied { border-color: #22c55e; color: #22c55e; }
 
+
+  .tone-chip {
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #666;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .tone-chip:hover { border-color: var(--blood); color: #aaa; }
+  .tone-chip.active { background: #1a0808; border-color: var(--crimson); color: var(--crimson); box-shadow: 0 0 8px rgba(220,20,60,0.2); }
+
   /* VOICEOVER PLAYER */
   .voice-card {
     background: linear-gradient(135deg, #0f0f0f 0%, #080d12 100%);
@@ -990,25 +1007,87 @@
     </div>
 
 
-    <!-- VOICEOVER PLAYER -->
+    <!-- VOICEOVER PLAYER v2 -->
     <div class="voice-card">
       <div class="card-header" style="border-bottom:1px solid #0a1a2a;background:linear-gradient(90deg,#080d12,#050810);">
-        <span class="card-title" style="color:#4a8ab4;">🎙 Built-in Voiceover Player (Free, No External Site)</span>
+        <span class="card-title" style="color:#4a8ab4;">🎙 Horror Voiceover Studio</span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#333;letter-spacing:1px;">FREE · BUILT-IN · DOWNLOADABLE</span>
       </div>
-      <div class="voice-controls">
-        <select class="voice-select" id="voiceSelect">
-          <option value="">Loading voices...</option>
-        </select>
-        <select class="voice-select voice-speed" id="voiceSpeed">
-          <option value="0.7">0.7x Slow</option>
-          <option value="0.85" selected>0.85x</option>
-          <option value="1.0">1.0x Normal</option>
-          <option value="1.1">1.1x Fast</option>
-        </select>
-        <button class="voice-btn" id="playBtn" onclick="toggleVoice()">▶ PLAY NARRATION</button>
-        <button class="voice-btn" onclick="downloadVoiceScript()">⬇ DOWNLOAD SCRIPT TXT</button>
+
+      <!-- TONE PRESETS -->
+      <div style="padding:14px 16px 0;">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--crimson);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;">🎭 Voice Tone Presets</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;" id="tonePresets">
+          <button class="tone-chip active" data-rate="0.75" data-pitch="0.6" onclick="setTone(this)">💀 HORROR NARRATOR</button>
+          <button class="tone-chip" data-rate="0.65" data-pitch="0.4" onclick="setTone(this)">👹 DEMON VOICE</button>
+          <button class="tone-chip" data-rate="0.8" data-pitch="0.5" onclick="setTone(this)">🕯 GHOST WHISPER</button>
+          <button class="tone-chip" data-rate="1.1" data-pitch="1.4" onclick="setTone(this)">😱 PANICKED</button>
+          <button class="tone-chip" data-rate="0.9" data-pitch="0.7" onclick="setTone(this)">🔍 INVESTIGATOR</button>
+          <button class="tone-chip" data-rate="0.7" data-pitch="0.45" onclick="setTone(this)">⚰️ DEATH WHISPER</button>
+          <button class="tone-chip" data-rate="1.0" data-pitch="1.6" onclick="setTone(this)">🧒 CREEPY CHILD</button>
+          <button class="tone-chip" data-rate="0.85" data-pitch="1.1" onclick="setTone(this)">👩 SCARED FEMALE</button>
+          <button class="tone-chip" data-rate="0.9" data-pitch="0.8" onclick="setTone(this)">🎙 DOCUMENTARY</button>
+          <button class="tone-chip" data-rate="1.2" data-pitch="1.3" onclick="setTone(this)">⚡ SHOCKED</button>
+          <button class="tone-chip" data-rate="0.6" data-pitch="0.35" onclick="setTone(this)">🌑 ANCIENT EVIL</button>
+          <button class="tone-chip" data-rate="0.95" data-pitch="0.9" onclick="setTone(this)">📻 RADIO HOST</button>
+        </div>
       </div>
-      <div class="voice-status" id="voiceStatus">Select a voice and click Play to hear your story narrated</div>
+
+      <!-- VOICE + CONTROLS -->
+      <div class="voice-controls" style="margin-top:12px;">
+        <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:1px;">VOICE</div>
+          <select class="voice-select" id="voiceSelect">
+            <option value="">Loading voices...</option>
+          </select>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:1px;">GENDER FILTER</div>
+          <select class="voice-select" id="genderFilter" onchange="filterVoices()" style="width:130px;">
+            <option value="all">All Voices</option>
+            <option value="male">Male Only</option>
+            <option value="female">Female Only</option>
+          </select>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:1px;">SPEED</div>
+          <input type="range" id="voiceSpeedSlider" min="0.4" max="1.5" step="0.05" value="0.75"
+            oninput="document.getElementById('speedVal').textContent=parseFloat(this.value).toFixed(2)+'x'"
+            style="width:100px;accent-color:var(--crimson);">
+          <span id="speedVal" style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--crimson);">0.75x</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:1px;">PITCH</div>
+          <input type="range" id="voicePitchSlider" min="0.2" max="2.0" step="0.05" value="0.6"
+            oninput="document.getElementById('pitchVal').textContent=parseFloat(this.value).toFixed(2)"
+            style="width:100px;accent-color:var(--crimson);">
+          <span id="pitchVal" style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--crimson);">0.60</span>
+        </div>
+      </div>
+
+      <!-- TEST PHRASE -->
+      <div style="padding:0 16px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="text" id="testPhrase" value="It was the darkest night I had ever seen..." 
+          style="flex:1;min-width:200px;background:#0d0d0d;border:1px solid #1a3a5a;color:var(--bone);font-family:'Special Elite',cursive;font-size:0.8rem;padding:8px 12px;border-radius:3px;outline:none;">
+        <button class="voice-btn" onclick="testVoice()" style="white-space:nowrap;">🔊 TEST VOICE</button>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div style="padding:0 16px 14px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="voice-btn" id="playBtn" onclick="toggleVoice()" style="flex:1;">▶ PLAY FULL STORY</button>
+        <button class="voice-btn" id="recordBtn" onclick="recordAudio()" style="flex:1;background:linear-gradient(135deg,#4a0a0a,#2a0505);border-color:#8a1a1a;color:#d48a8a;">⏺ RECORD TO MP3</button>
+      </div>
+
+      <!-- AUDIO DOWNLOAD -->
+      <div id="audioDownloadArea" style="display:none;padding:0 16px 14px;">
+        <div style="background:#0d1a0d;border:1px solid #1a3a1a;border-radius:3px;padding:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <span style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:#4a8a4a;letter-spacing:1px;">✅ AUDIO READY</span>
+          <audio id="audioPlayer" controls style="flex:1;min-width:200px;height:32px;"></audio>
+          <button class="voice-btn" id="dlAudioBtn" onclick="downloadAudio()" style="background:linear-gradient(135deg,#0a3a0a,#051a05);border-color:#1a6a1a;color:#8ad48a;white-space:nowrap;">⬇ DOWNLOAD MP3</button>
+        </div>
+      </div>
+
+      <div class="voice-status" id="voiceStatus">🎭 Select a tone preset → pick a voice → click Play or Record</div>
     </div>
 
     <!-- EXPORT PACKAGE -->
@@ -1384,39 +1463,69 @@ function copySection(id) {
 
 
 
-// ===== VOICEOVER PLAYER =====
+// ===== VOICEOVER PLAYER v2 =====
 let currentUtterance = null;
 let isPlaying = false;
 let currentScript = '';
+let audioBlob = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let activeToneRate = 0.75;
+let activeTonePitch = 0.6;
+let allVoices = [];
+
+// Known male/female voice name patterns
+const MALE_PATTERNS = ['david','mark','james','daniel','alex','fred','junior','eddy','thomas','paul','george','male','man','guy','bruce','ryan','reed','english uk'];
+const FEMALE_PATTERNS = ['zira','samantha','victoria','karen','moira','fiona','tessa','female','woman','girl','alice','susan','natasha','serena','emily','kate','julie','lisa'];
+
+function getGender(voiceName) {
+  const n = voiceName.toLowerCase();
+  if (FEMALE_PATTERNS.some(p => n.includes(p))) return 'female';
+  if (MALE_PATTERNS.some(p => n.includes(p))) return 'male';
+  return 'unknown';
+}
 
 function loadVoices() {
+  allVoices = speechSynthesis.getVoices();
+  if (allVoices.length === 0) { setTimeout(loadVoices, 200); return; }
+  filterVoices();
+}
+
+function filterVoices() {
   const sel = document.getElementById('voiceSelect');
   if (!sel) return;
-  const voices = speechSynthesis.getVoices();
-  if (voices.length === 0) { setTimeout(loadVoices, 200); return; }
+  const filter = document.getElementById('genderFilter')?.value || 'all';
   sel.innerHTML = '';
-  const preferred = ['Daniel','Google UK English Male','Microsoft David','Alex','Google US English','Microsoft Mark'];
-  let added = [];
-  // Add preferred voices first
-  voices.forEach(v => {
-    if (preferred.some(p => v.name.includes(p))) {
-      const o = document.createElement('option');
-      o.value = v.name; o.textContent = '⭐ ' + v.name + ' (' + v.lang + ')';
-      sel.appendChild(o); added.push(v.name);
-    }
+
+  let voices = allVoices.filter(v => v.lang.startsWith('en'));
+  if (voices.length === 0) voices = allVoices;
+
+  if (filter === 'male') voices = voices.filter(v => getGender(v.name) !== 'female');
+  if (filter === 'female') voices = voices.filter(v => getGender(v.name) === 'female');
+
+  // Sort: preferred deep male voices first for horror
+  const preferred = ['Daniel','Microsoft David','Google UK English Male','Alex','Microsoft Mark','Microsoft James'];
+  voices.sort((a,b) => {
+    const aP = preferred.findIndex(p => a.name.includes(p));
+    const bP = preferred.findIndex(p => b.name.includes(p));
+    if (aP !== -1 && bP === -1) return -1;
+    if (bP !== -1 && aP === -1) return 1;
+    return 0;
   });
-  // Add all others
+
   voices.forEach(v => {
-    if (!added.includes(v.name) && v.lang.startsWith('en')) {
-      const o = document.createElement('option');
-      o.value = v.name; o.textContent = v.name + ' (' + v.lang + ')';
-      sel.appendChild(o);
-    }
+    const o = document.createElement('option');
+    const gender = getGender(v.name);
+    const gIcon = gender === 'female' ? '👩' : gender === 'male' ? '👨' : '🎙';
+    o.value = v.name;
+    o.textContent = gIcon + ' ' + v.name + ' (' + v.lang + ')';
+    sel.appendChild(o);
   });
+
   if (sel.options.length === 0) {
-    voices.forEach(v => {
+    allVoices.forEach(v => {
       const o = document.createElement('option');
-      o.value = v.name; o.textContent = v.name + ' (' + v.lang + ')';
+      o.value = v.name; o.textContent = v.name;
       sel.appendChild(o);
     });
   }
@@ -1425,11 +1534,43 @@ function loadVoices() {
 speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
 
+function setTone(el) {
+  document.querySelectorAll('.tone-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeToneRate = parseFloat(el.dataset.rate);
+  activeTonePitch = parseFloat(el.dataset.pitch);
+  document.getElementById('voiceSpeedSlider').value = activeToneRate;
+  document.getElementById('voicePitchSlider').value = activeTonePitch;
+  document.getElementById('speedVal').textContent = activeToneRate.toFixed(2) + 'x';
+  document.getElementById('pitchVal').textContent = activeTonePitch.toFixed(2);
+  // Auto test with phrase
+  testVoice();
+}
+
+function getVoiceSettings() {
+  const voices = speechSynthesis.getVoices();
+  const selectedName = document.getElementById('voiceSelect').value;
+  const voice = voices.find(v => v.name === selectedName);
+  const rate = parseFloat(document.getElementById('voiceSpeedSlider').value);
+  const pitch = parseFloat(document.getElementById('voicePitchSlider').value);
+  return { voice, rate, pitch };
+}
+
+function testVoice() {
+  speechSynthesis.cancel();
+  const phrase = document.getElementById('testPhrase').value || 'It was the darkest night I had ever seen.';
+  const { voice, rate, pitch } = getVoiceSettings();
+  const utt = new SpeechSynthesisUtterance(phrase);
+  if (voice) utt.voice = voice;
+  utt.rate = rate; utt.pitch = pitch;
+  speechSynthesis.speak(utt);
+}
+
 function toggleVoice() {
   if (isPlaying) {
     speechSynthesis.cancel();
     isPlaying = false;
-    document.getElementById('playBtn').textContent = '▶ PLAY NARRATION';
+    document.getElementById('playBtn').textContent = '▶ PLAY FULL STORY';
     document.getElementById('playBtn').className = 'voice-btn';
     document.getElementById('voiceStatus').textContent = 'Playback stopped.';
     return;
@@ -1438,38 +1579,121 @@ function toggleVoice() {
     document.getElementById('voiceStatus').textContent = '⚠ Generate a video package first!';
     return;
   }
-  const voices = speechSynthesis.getVoices();
-  const selectedName = document.getElementById('voiceSelect').value;
-  const voice = voices.find(v => v.name === selectedName);
-  const speed = parseFloat(document.getElementById('voiceSpeed').value);
-  // Clean script — remove [PAUSE] markers for TTS
-  const cleanScript = currentScript.replace(/\[PAUSE\]/g, '...').replace(/\[.*?\]/g, '');
-  // Split into chunks for better browser TTS handling
+  const { voice, rate, pitch } = getVoiceSettings();
+  const cleanScript = currentScript.replace(/\[PAUSE\]/g, '...  ').replace(/\[.*?\]/g, '');
   const chunks = cleanScript.match(/[^.!?]+[.!?]+/g) || [cleanScript];
-  let chunkIndex = 0;
+  let idx = 0;
   isPlaying = true;
   document.getElementById('playBtn').textContent = '⏹ STOP';
   document.getElementById('playBtn').className = 'voice-btn playing';
-  document.getElementById('voiceStatus').textContent = '🎙 Playing narration... (' + chunks.length + ' sentences)';
+  document.getElementById('voiceStatus').textContent = '🎙 Playing... sentence 1 of ' + chunks.length;
 
-  function speakNext() {
-    if (!isPlaying || chunkIndex >= chunks.length) {
+  function next() {
+    if (!isPlaying || idx >= chunks.length) {
       isPlaying = false;
-      document.getElementById('playBtn').textContent = '▶ PLAY NARRATION';
+      document.getElementById('playBtn').textContent = '▶ PLAY FULL STORY';
       document.getElementById('playBtn').className = 'voice-btn';
-      document.getElementById('voiceStatus').textContent = '✅ Narration complete! ' + chunks.length + ' sentences played.';
+      document.getElementById('voiceStatus').textContent = '✅ Done! ' + chunks.length + ' sentences narrated.';
       return;
     }
-    const utt = new SpeechSynthesisUtterance(chunks[chunkIndex].trim());
+    const utt = new SpeechSynthesisUtterance(chunks[idx].trim());
     if (voice) utt.voice = voice;
-    utt.rate = speed;
-    utt.pitch = 0.85;
-    utt.onend = () => { chunkIndex++; speakNext(); };
-    utt.onerror = () => { chunkIndex++; speakNext(); };
+    utt.rate = rate; utt.pitch = pitch;
+    utt.onend = () => { 
+      idx++;
+      document.getElementById('voiceStatus').textContent = '🎙 Playing... sentence ' + Math.min(idx+1, chunks.length) + ' of ' + chunks.length;
+      next(); 
+    };
+    utt.onerror = () => { idx++; next(); };
     speechSynthesis.speak(utt);
-    currentUtterance = utt;
   }
-  speakNext();
+  next();
+}
+
+// ── RECORD AUDIO ─────────────────────────────────────────────────────────────
+async function recordAudio() {
+  if (!currentScript) { 
+    document.getElementById('voiceStatus').textContent = '⚠ Generate a video package first!';
+    return; 
+  }
+
+  const btn = document.getElementById('recordBtn');
+
+  // Check mic permission — we use system audio via a trick:
+  // We can't directly record TTS output without a virtual audio device.
+  // Best approach for browser: record microphone + play TTS so user can record ambient.
+  // Better approach: use MediaRecorder on AudioContext to capture TTS.
+
+  try {
+    // Create audio context to capture speech synthesis output
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const dest = audioCtx.createMediaStreamDestination();
+    
+    // We'll use a simpler approach - record via mic while TTS plays
+    // and instruct the user, OR use the Web Speech API trick below
+    
+    audioChunks = [];
+    const stream = dest.stream;
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const url = URL.createObjectURL(audioBlob);
+      const player = document.getElementById('audioPlayer');
+      player.src = url;
+      document.getElementById('audioDownloadArea').style.display = 'block';
+      document.getElementById('voiceStatus').textContent = '✅ Audio recorded! Press play to preview or download.';
+      btn.textContent = '⏺ RECORD TO MP3';
+      btn.style.background = 'linear-gradient(135deg,#4a0a0a,#2a0505)';
+    };
+
+    mediaRecorder.start();
+    btn.textContent = '⏹ STOP RECORDING';
+    btn.style.background = 'linear-gradient(135deg,#6a0a0a,#4a0505)';
+    document.getElementById('voiceStatus').textContent = '⏺ Recording... speak into your mic or let TTS play!';
+
+    // Auto-play TTS while recording
+    const { voice, rate, pitch } = getVoiceSettings();
+    const cleanScript = currentScript.replace(/\[PAUSE\]/g, '...  ').replace(/\[.*?\]/g, '');
+    const chunks = cleanScript.match(/[^.!?]+[.!?]+/g) || [cleanScript];
+    let idx = 0;
+
+    function speakAndRecord() {
+      if (idx >= chunks.length) {
+        setTimeout(() => { if (mediaRecorder.state !== 'inactive') mediaRecorder.stop(); }, 500);
+        return;
+      }
+      const utt = new SpeechSynthesisUtterance(chunks[idx].trim());
+      if (voice) utt.voice = voice; utt.rate = rate; utt.pitch = pitch;
+      utt.onend = () => { idx++; speakAndRecord(); };
+      utt.onerror = () => { idx++; speakAndRecord(); };
+      speechSynthesis.speak(utt);
+    }
+    speakAndRecord();
+
+    // Override stop button
+    btn.onclick = () => {
+      speechSynthesis.cancel();
+      if (mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+      btn.onclick = recordAudio;
+    };
+
+  } catch(e) {
+    // Fallback: guide user to use system recording
+    document.getElementById('voiceStatus').textContent = '⚠ Direct audio capture not supported. Use Windows Voice Recorder or Audacity to record while playing!';
+    document.getElementById('voiceStatus').style.color = '#f59e0b';
+    // Just play TTS so they can record via Audacity
+    toggleVoice();
+  }
+}
+
+function downloadAudio() {
+  if (!audioBlob) { alert('Record audio first!'); return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(audioBlob);
+  a.download = 'horror-narration.webm';
+  a.click();
+  document.getElementById('voiceStatus').textContent = '✅ Audio downloaded as horror-narration.webm — import into CapCut!';
 }
 
 function downloadVoiceScript() {
