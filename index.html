@@ -1018,18 +1018,22 @@
       <div style="padding:14px 16px 0;">
         <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--crimson);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;">🎭 Voice Tone Presets</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;" id="tonePresets">
-          <button class="tone-chip active" data-rate="0.75" data-pitch="0.6" onclick="setTone(this)">💀 HORROR NARRATOR</button>
-          <button class="tone-chip" data-rate="0.65" data-pitch="0.4" onclick="setTone(this)">👹 DEMON VOICE</button>
-          <button class="tone-chip" data-rate="0.8" data-pitch="0.5" onclick="setTone(this)">🕯 GHOST WHISPER</button>
-          <button class="tone-chip" data-rate="1.1" data-pitch="1.4" onclick="setTone(this)">😱 PANICKED</button>
-          <button class="tone-chip" data-rate="0.9" data-pitch="0.7" onclick="setTone(this)">🔍 INVESTIGATOR</button>
-          <button class="tone-chip" data-rate="0.7" data-pitch="0.45" onclick="setTone(this)">⚰️ DEATH WHISPER</button>
-          <button class="tone-chip" data-rate="1.0" data-pitch="1.6" onclick="setTone(this)">🧒 CREEPY CHILD</button>
-          <button class="tone-chip" data-rate="0.85" data-pitch="1.1" onclick="setTone(this)">👩 SCARED FEMALE</button>
-          <button class="tone-chip" data-rate="0.9" data-pitch="0.8" onclick="setTone(this)">🎙 DOCUMENTARY</button>
-          <button class="tone-chip" data-rate="1.2" data-pitch="1.3" onclick="setTone(this)">⚡ SHOCKED</button>
-          <button class="tone-chip" data-rate="0.6" data-pitch="0.35" onclick="setTone(this)">🌑 ANCIENT EVIL</button>
-          <button class="tone-chip" data-rate="0.95" data-pitch="0.9" onclick="setTone(this)">📻 RADIO HOST</button>
+          <button class="tone-chip active" data-rate="0.72" data-pitch="0.55" data-test="The darkness crept closer... and I realized I was not alone." onclick="setTone(this)">💀 HORROR NARRATOR</button>
+          <button class="tone-chip" data-rate="0.55" data-pitch="0.3" data-test="You cannot escape. I have been waiting for you." onclick="setTone(this)">👹 DEMON VOICE</button>
+          <button class="tone-chip" data-rate="0.65" data-pitch="0.45" data-test="She was standing behind you... the whole time." onclick="setTone(this)">🕯 GHOST WHISPER</button>
+          <button class="tone-chip" data-rate="1.25" data-pitch="1.5" data-test="Oh no. Oh no no no. Something is in the house!" onclick="setTone(this)">😱 PANICKED</button>
+          <button class="tone-chip" data-rate="0.88" data-pitch="0.72" data-test="The evidence pointed to something deeply wrong in that house." onclick="setTone(this)">🔍 INVESTIGATOR</button>
+          <button class="tone-chip" data-rate="0.5" data-pitch="0.35" data-test="Come... closer... I have a secret to tell you." onclick="setTone(this)">⚰️ DEATH WHISPER</button>
+          <button class="tone-chip" data-rate="0.95" data-pitch="1.8" data-test="Mommy said never open that door. But I opened it anyway." onclick="setTone(this)">🧒 CREEPY CHILD</button>
+          <button class="tone-chip" data-rate="0.9" data-pitch="1.3" data-test="I heard something downstairs. I should not have looked." onclick="setTone(this)">👩 SCARED FEMALE</button>
+          <button class="tone-chip" data-rate="0.85" data-pitch="0.9" data-test="In the year 1987, a family disappeared without a trace." onclick="setTone(this)">🎙 DOCUMENTARY</button>
+          <button class="tone-chip" data-rate="1.35" data-pitch="1.4" data-test="Wait — WHAT WAS THAT?! Did you see that thing?!" onclick="setTone(this)">⚡ SHOCKED</button>
+          <button class="tone-chip" data-rate="0.45" data-pitch="0.25" data-test="I am as old as the earth itself... and I hunger." onclick="setTone(this)">🌑 ANCIENT EVIL</button>
+          <button class="tone-chip" data-rate="0.92" data-pitch="1.0" data-test="Good evening listeners. Tonight's story will keep you up all night." onclick="setTone(this)">📻 RADIO HOST</button>
+          <button class="tone-chip" data-rate="0.78" data-pitch="0.65" data-test="They told me the woods were safe at night. They lied." onclick="setTone(this)">🌲 WOODS HORROR</button>
+          <button class="tone-chip" data-rate="1.05" data-pitch="0.85" data-test="Every. Single. Night. The knocking starts at 3am." onclick="setTone(this)">🔨 TENSE THRILLER</button>
+          <button class="tone-chip" data-rate="0.68" data-pitch="0.5" data-test="The ritual required three things. I only had two." onclick="setTone(this)">🕍 OCCULT PRIEST</button>
+          <button class="tone-chip" data-rate="1.1" data-pitch="0.6" data-test="This is not a story. This actually happened to me." onclick="setTone(this)">📖 TRUE STORY</button>
         </div>
       </div>
 
@@ -1073,17 +1077,43 @@
       </div>
 
       <!-- ACTION BUTTONS -->
-      <div style="padding:0 16px 14px;display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="voice-btn" id="playBtn" onclick="toggleVoice()" style="flex:1;">▶ PLAY FULL STORY</button>
-        <button class="voice-btn" id="recordBtn" onclick="recordAudio()" style="flex:1;background:linear-gradient(135deg,#4a0a0a,#2a0505);border-color:#8a1a1a;color:#d48a8a;">⏺ RECORD TO MP3</button>
+      <div style="padding:0 16px 10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="voice-btn" id="playBtn" onclick="toggleVoice()" style="flex:1;">▶ PREVIEW (Browser TTS)</button>
+        <button class="voice-btn" onclick="generateElevenLabsAudio()" style="flex:1;background:linear-gradient(135deg,#1a0a3a,#0d0520);border-color:#5a2a8a;color:#b48ad4;white-space:nowrap;">⬇ DOWNLOAD AUDIO (ElevenLabs)</button>
       </div>
 
-      <!-- AUDIO DOWNLOAD -->
+      <!-- ELEVENLABS KEY -->
+      <div style="padding:0 16px 10px;">
+        <div style="background:#0d0818;border:1px solid #1a0a2a;border-radius:3px;padding:12px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#7a4ab4;letter-spacing:2px;margin-bottom:8px;">🎤 ELEVENLABS FREE API KEY (for real downloadable audio)</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <input type="password" id="elevenKey" placeholder="Get free key at elevenlabs.io → Profile → API Key"
+              style="flex:1;background:#08050e;border:1px solid #2a1a4a;color:var(--bone);font-family:'Share Tech Mono',monospace;font-size:0.7rem;padding:8px 12px;border-radius:3px;outline:none;min-width:200px;">
+            <select id="elevenVoice" style="background:#08050e;border:1px solid #2a1a4a;color:var(--bone);font-family:'Share Tech Mono',monospace;font-size:0.7rem;padding:8px 12px;border-radius:3px;min-width:160px;">
+              <option value="onwK4e9ZLuTAKqWW03F9">🔴 Adam (Deep Male)</option>
+              <option value="TxGEqnHWrfWFTfGW9XjX">👹 Josh (Dark Male)</option>
+              <option value="VR6AewLTigWG4xSOukaG">🎙 Arnold (Powerful)</option>
+              <option value="pNInz6obpgDQGcFmaJgB">⚡ Sam (Intense Male)</option>
+              <option value="yoZ06aMxZJJ28mfd3POQ">💀 Sam (Narrator)</option>
+              <option value="jBpfuIE2acCO8z3wKNLl">👻 Gigi (Eerie Female)</option>
+              <option value="XB0fDUnXU5powFXDhCwa">🕯 Charlotte (Dark Female)</option>
+              <option value="ThT5KcBeYPX3keUQqHPh">😱 Dorothy (Scared Female)</option>
+              <option value="AZnzlk1XvdvUeBnXmlld">🔍 Domi (Investigator)</option>
+              <option value="EXAVITQu4vr4xnSDxMaL">📻 Bella (Smooth Female)</option>
+            </select>
+          </div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#444;margin-top:8px;letter-spacing:1px;">
+            Free tier = 10,000 chars/month → ~6 full horror videos FREE. Get key: elevenlabs.io (no card needed for free tier)
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIO PLAYER -->
       <div id="audioDownloadArea" style="display:none;padding:0 16px 14px;">
         <div style="background:#0d1a0d;border:1px solid #1a3a1a;border-radius:3px;padding:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
           <span style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:#4a8a4a;letter-spacing:1px;">✅ AUDIO READY</span>
           <audio id="audioPlayer" controls style="flex:1;min-width:200px;height:32px;"></audio>
-          <button class="voice-btn" id="dlAudioBtn" onclick="downloadAudio()" style="background:linear-gradient(135deg,#0a3a0a,#051a05);border-color:#1a6a1a;color:#8ad48a;white-space:nowrap;">⬇ DOWNLOAD MP3</button>
+          <button class="voice-btn" onclick="downloadAudio()" style="background:linear-gradient(135deg,#0a3a0a,#051a05);border-color:#1a6a1a;color:#8ad48a;white-space:nowrap;">⬇ DOWNLOAD MP3</button>
         </div>
       </div>
 
@@ -1193,7 +1223,7 @@
     </div>
   </div>
 
-  <footer>nightmare factory v2.0 · built for your horror empire · start posting · get monetized</footer>
+  <footer>nightmare factory v4.0 · built for your horror empire · start posting · get monetized</footer>
 </div>
 
 <script>
@@ -1543,7 +1573,8 @@ function setTone(el) {
   document.getElementById('voicePitchSlider').value = activeTonePitch;
   document.getElementById('speedVal').textContent = activeToneRate.toFixed(2) + 'x';
   document.getElementById('pitchVal').textContent = activeTonePitch.toFixed(2);
-  // Auto test with phrase
+  // Use the tone-specific test phrase
+  if (el.dataset.test) document.getElementById('testPhrase').value = el.dataset.test;
   testVoice();
 }
 
@@ -1611,89 +1642,107 @@ function toggleVoice() {
 }
 
 // ── RECORD AUDIO ─────────────────────────────────────────────────────────────
-async function recordAudio() {
-  if (!currentScript) { 
+// ElevenLabs voice map with tone settings
+const ELEVEN_TONE_SETTINGS = {
+  '💀 HORROR NARRATOR':  { stability: 0.45, similarity_boost: 0.75, style: 0.8,  use_speaker_boost: true },
+  '👹 DEMON VOICE':      { stability: 0.30, similarity_boost: 0.60, style: 1.0,  use_speaker_boost: true },
+  '🕯 GHOST WHISPER':    { stability: 0.70, similarity_boost: 0.50, style: 0.6,  use_speaker_boost: false },
+  '😱 PANICKED':         { stability: 0.20, similarity_boost: 0.80, style: 1.0,  use_speaker_boost: true },
+  '🔍 INVESTIGATOR':     { stability: 0.65, similarity_boost: 0.80, style: 0.4,  use_speaker_boost: true },
+  '⚰️ DEATH WHISPER':    { stability: 0.80, similarity_boost: 0.45, style: 0.7,  use_speaker_boost: false },
+  '🧒 CREEPY CHILD':     { stability: 0.40, similarity_boost: 0.70, style: 0.9,  use_speaker_boost: true },
+  '👩 SCARED FEMALE':    { stability: 0.25, similarity_boost: 0.75, style: 0.95, use_speaker_boost: true },
+  '🎙 DOCUMENTARY':      { stability: 0.75, similarity_boost: 0.85, style: 0.2,  use_speaker_boost: true },
+  '⚡ SHOCKED':          { stability: 0.15, similarity_boost: 0.85, style: 1.0,  use_speaker_boost: true },
+  '🌑 ANCIENT EVIL':     { stability: 0.85, similarity_boost: 0.55, style: 0.85, use_speaker_boost: true },
+  '📻 RADIO HOST':       { stability: 0.70, similarity_boost: 0.90, style: 0.3,  use_speaker_boost: true },
+};
+
+function getActiveToneName() {
+  const active = document.querySelector('.tone-chip.active');
+  return active ? active.textContent.trim() : '💀 HORROR NARRATOR';
+}
+
+async function generateElevenLabsAudio() {
+  const key = document.getElementById('elevenKey').value.trim();
+  if (!key) {
+    document.getElementById('voiceStatus').textContent = '⚠ Enter your ElevenLabs API key above! Get free key at elevenlabs.io';
+    document.getElementById('voiceStatus').style.color = '#f59e0b';
+    return;
+  }
+  if (!currentScript) {
     document.getElementById('voiceStatus').textContent = '⚠ Generate a video package first!';
-    return; 
+    return;
   }
 
-  const btn = document.getElementById('recordBtn');
+  const voiceId = document.getElementById('elevenVoice').value;
+  const toneName = getActiveToneName();
+  const toneSettings = ELEVEN_TONE_SETTINGS[toneName] || ELEVEN_TONE_SETTINGS['💀 HORROR NARRATOR'];
+  const cleanScript = currentScript.replace(/\[PAUSE\]/g, '... ').replace(/\[.*?\]/g, '').trim();
+  // ElevenLabs free tier limit ~2500 chars per call — split if needed
+  const MAX_CHARS = 2400;
+  const parts = [];
+  let remaining = cleanScript;
+  while (remaining.length > 0) {
+    if (remaining.length <= MAX_CHARS) { parts.push(remaining); break; }
+    let cut = remaining.lastIndexOf('.', MAX_CHARS);
+    if (cut === -1) cut = MAX_CHARS;
+    parts.push(remaining.slice(0, cut + 1).trim());
+    remaining = remaining.slice(cut + 1).trim();
+  }
 
-  // Check mic permission — we use system audio via a trick:
-  // We can't directly record TTS output without a virtual audio device.
-  // Best approach for browser: record microphone + play TTS so user can record ambient.
-  // Better approach: use MediaRecorder on AudioContext to capture TTS.
+  document.getElementById('voiceStatus').textContent = '⏳ Generating real AI audio... part 1 of ' + parts.length;
+  document.getElementById('voiceStatus').style.color = '#b48ad4';
 
   try {
-    // Create audio context to capture speech synthesis output
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const dest = audioCtx.createMediaStreamDestination();
-    
-    // We'll use a simpler approach - record via mic while TTS plays
-    // and instruct the user, OR use the Web Speech API trick below
-    
-    audioChunks = [];
-    const stream = dest.stream;
-    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
-    mediaRecorder.onstop = () => {
-      audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-      const url = URL.createObjectURL(audioBlob);
-      const player = document.getElementById('audioPlayer');
-      player.src = url;
-      document.getElementById('audioDownloadArea').style.display = 'block';
-      document.getElementById('voiceStatus').textContent = '✅ Audio recorded! Press play to preview or download.';
-      btn.textContent = '⏺ RECORD TO MP3';
-      btn.style.background = 'linear-gradient(135deg,#4a0a0a,#2a0505)';
-    };
+    const audioBuffers = [];
+    for (let i = 0; i < parts.length; i++) {
+      document.getElementById('voiceStatus').textContent = '⏳ Generating audio... part ' + (i+1) + ' of ' + parts.length;
+      const resp = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voiceId, {
+        method: 'POST',
+        headers: {
+          'xi-api-key': key,
+          'Content-Type': 'application/json',
+          'Accept': 'audio/mpeg'
+        },
+        body: JSON.stringify({
+          text: parts[i],
+          model_id: 'eleven_monolingual_v1',
+          voice_settings: toneSettings
+        })
+      });
 
-    mediaRecorder.start();
-    btn.textContent = '⏹ STOP RECORDING';
-    btn.style.background = 'linear-gradient(135deg,#6a0a0a,#4a0505)';
-    document.getElementById('voiceStatus').textContent = '⏺ Recording... speak into your mic or let TTS play!';
-
-    // Auto-play TTS while recording
-    const { voice, rate, pitch } = getVoiceSettings();
-    const cleanScript = currentScript.replace(/\[PAUSE\]/g, '...  ').replace(/\[.*?\]/g, '');
-    const chunks = cleanScript.match(/[^.!?]+[.!?]+/g) || [cleanScript];
-    let idx = 0;
-
-    function speakAndRecord() {
-      if (idx >= chunks.length) {
-        setTimeout(() => { if (mediaRecorder.state !== 'inactive') mediaRecorder.stop(); }, 500);
-        return;
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.detail?.message || 'ElevenLabs error: ' + resp.status + '. Check your API key!');
       }
-      const utt = new SpeechSynthesisUtterance(chunks[idx].trim());
-      if (voice) utt.voice = voice; utt.rate = rate; utt.pitch = pitch;
-      utt.onend = () => { idx++; speakAndRecord(); };
-      utt.onerror = () => { idx++; speakAndRecord(); };
-      speechSynthesis.speak(utt);
+      audioBuffers.push(await resp.arrayBuffer());
     }
-    speakAndRecord();
 
-    // Override stop button
-    btn.onclick = () => {
-      speechSynthesis.cancel();
-      if (mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      btn.onclick = recordAudio;
-    };
+    // Merge all parts into one blob
+    const merged = new Blob(audioBuffers, { type: 'audio/mpeg' });
+    audioBlob = merged;
+    const url = URL.createObjectURL(merged);
+    const player = document.getElementById('audioPlayer');
+    player.src = url;
+    document.getElementById('audioDownloadArea').style.display = 'block';
+    document.getElementById('voiceStatus').textContent = '✅ Real AI audio ready! Press play to listen, then download MP3.';
+    document.getElementById('voiceStatus').style.color = '#4a8a4a';
+    player.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
   } catch(e) {
-    // Fallback: guide user to use system recording
-    document.getElementById('voiceStatus').textContent = '⚠ Direct audio capture not supported. Use Windows Voice Recorder or Audacity to record while playing!';
-    document.getElementById('voiceStatus').style.color = '#f59e0b';
-    // Just play TTS so they can record via Audacity
-    toggleVoice();
+    document.getElementById('voiceStatus').textContent = '❌ ' + e.message;
+    document.getElementById('voiceStatus').style.color = '#dc143c';
   }
 }
 
 function downloadAudio() {
-  if (!audioBlob) { alert('Record audio first!'); return; }
+  if (!audioBlob) { alert('Generate audio first using ElevenLabs!'); return; }
   const a = document.createElement('a');
   a.href = URL.createObjectURL(audioBlob);
-  a.download = 'horror-narration.webm';
+  a.download = 'horror-narration.mp3';
   a.click();
-  document.getElementById('voiceStatus').textContent = '✅ Audio downloaded as horror-narration.webm — import into CapCut!';
+  document.getElementById('voiceStatus').textContent = '✅ MP3 downloaded! Import into CapCut as your voiceover track.';
 }
 
 function downloadVoiceScript() {
