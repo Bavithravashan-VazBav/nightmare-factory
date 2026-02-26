@@ -462,6 +462,255 @@
     letter-spacing: 1px;
   }
   .error-msg.visible { display: block; }
+
+  /* HISTORY */
+  .history-section {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .history-title {
+    font-family: 'Creepster', cursive;
+    font-size: 1.4rem;
+    color: var(--crimson);
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(220,20,60,0.3);
+  }
+
+  .clear-history-btn {
+    background: transparent;
+    border: 1px solid #2a1010;
+    color: #555;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .clear-history-btn:hover { border-color: var(--blood); color: #ff6b6b; }
+
+  .history-empty {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: #333;
+    text-align: center;
+    padding: 30px;
+    border: 1px dashed #1e1e1e;
+    border-radius: 4px;
+    letter-spacing: 2px;
+  }
+
+  .history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .history-card {
+    background: linear-gradient(135deg, #0f0f0f 0%, #120808 100%);
+    border: 1px solid #1e1212;
+    border-radius: 4px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .history-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--blood);
+    opacity: 0.6;
+  }
+
+  .history-card:hover {
+    border-color: var(--blood);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(139,0,0,0.2);
+  }
+
+  .history-card-title {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.85rem;
+    color: var(--bone);
+    margin-bottom: 8px;
+    line-height: 1.4;
+    padding-left: 8px;
+  }
+
+  .history-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 8px;
+  }
+
+  .history-card-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: #444;
+    letter-spacing: 1px;
+  }
+
+  .history-card-type {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--blood);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .history-card-delete {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 2px;
+    transition: color 0.2s;
+    line-height: 1;
+  }
+  .history-card-delete:hover { color: var(--crimson); }
+
+  .history-view-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    color: #555;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    padding-left: 8px;
+    text-transform: uppercase;
+  }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: block; }
+
+  .modal-box {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #0f0f0f;
+    border: 1px solid var(--blood);
+    border-radius: 6px;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-header {
+    background: linear-gradient(90deg, #1a0808, #110505);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--blood);
+  }
+
+  .modal-title {
+    font-family: 'Creepster', cursive;
+    font-size: 1.1rem;
+    color: var(--crimson);
+    letter-spacing: 2px;
+  }
+
+  .modal-close {
+    background: transparent;
+    border: 1px solid #333;
+    color: #888;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .modal-close:hover { border-color: var(--crimson); color: var(--crimson); }
+
+  .modal-body { padding: 20px; }
+
+  .modal-section {
+    margin-bottom: 20px;
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .modal-section-header {
+    background: #1a0808;
+    padding: 10px 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--crimson);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-section-body {
+    padding: 14px;
+    font-size: 0.85rem;
+    color: #ccc;
+    white-space: pre-wrap;
+    line-height: 1.7;
+    font-family: 'Special Elite', cursive;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .modal-section-body.mono {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+  }
+
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px;
+  }
+
+  .modal-copy-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: #666;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .modal-copy-btn:hover { border-color: var(--crimson); color: var(--crimson); }
+  .modal-copy-btn.copied { border-color: #22c55e; color: #22c55e; }
 </style>
 </head>
 <body>
@@ -658,6 +907,30 @@
     </div>
 
     <button class="reset-btn" onclick="resetDashboard()">↺ Generate Another Video</button>
+  </div>
+
+
+  <!-- HISTORY SECTION -->
+  <div class="history-section" id="historySection">
+    <div class="history-header">
+      <span class="history-title">📂 Generated Packages History</span>
+      <button class="clear-history-btn" onclick="clearAllHistory()">✕ Clear All</button>
+    </div>
+    <div id="historyList">
+      <div class="history-empty" id="historyEmpty">NO PACKAGES GENERATED YET — HIT GENERATE TO START</div>
+      <div class="history-grid" id="historyGrid"></div>
+    </div>
+  </div>
+
+  <!-- HISTORY MODAL -->
+  <div class="modal-overlay" id="historyModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title">☠ PACKAGE DETAILS</span>
+        <button class="modal-close" onclick="closeModal()">✕ Close</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
   </div>
 
   <footer>nightmare factory v1.0 · built for your horror empire · start posting · get monetized</footer>
@@ -886,6 +1159,9 @@ function renderOutput(data) {
     }, 300);
   }
 
+  // Save to history
+  saveToHistory(data, document.getElementById('storyType').value);
+
   // Show output
   document.getElementById('outputSection').className = 'output-section visible';
   document.getElementById('loadingBar').className = 'loading-bar';
@@ -919,6 +1195,138 @@ function copySection(id) {
     }, 2000);
   });
 }
+
+
+// ===== HISTORY SYSTEM =====
+let history = JSON.parse(localStorage.getItem('nightmareHistory') || '[]');
+
+function saveToHistory(data, storyType) {
+  const entry = {
+    id: Date.now(),
+    date: new Date().toLocaleString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+    storyType: storyType,
+    data: data
+  };
+  history.unshift(entry);
+  if (history.length > 50) history = history.slice(0, 50); // keep last 50
+  localStorage.setItem('nightmareHistory', JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  const grid = document.getElementById('historyGrid');
+  const empty = document.getElementById('historyEmpty');
+  grid.innerHTML = '';
+
+  if (history.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  history.forEach((entry, idx) => {
+    const card = document.createElement('div');
+    card.className = 'history-card';
+    card.innerHTML = `
+      <button class="history-card-delete" onclick="deleteHistory(${entry.id}, event)" title="Delete">✕</button>
+      <div class="history-card-title">${entry.data.title || 'Untitled Story'}</div>
+      <div class="history-card-meta">
+        <span class="history-card-date">${entry.date}</span>
+        <span class="history-card-type">${entry.storyType.replace('_',' ')}</span>
+      </div>
+      <div class="history-view-badge">→ click to view full package</div>
+    `;
+    card.addEventListener('click', () => openModal(entry));
+    grid.appendChild(card);
+  });
+}
+
+function deleteHistory(id, e) {
+  e.stopPropagation();
+  history = history.filter(h => h.id !== id);
+  localStorage.setItem('nightmareHistory', JSON.stringify(history));
+  renderHistory();
+}
+
+function clearAllHistory() {
+  if (history.length === 0) return;
+  if (confirm('Delete all ' + history.length + ' saved packages?')) {
+    history = [];
+    localStorage.setItem('nightmareHistory', '[]');
+    renderHistory();
+  }
+}
+
+function openModal(entry) {
+  const d = entry.data;
+  const body = document.getElementById('modalBody');
+
+  let tagsHtml = '';
+  if (d.tags && Array.isArray(d.tags)) {
+    tagsHtml = d.tags.map(t => `<span class="tag" style="font-size:0.6rem;padding:3px 8px;">${t}</span>`).join('');
+  }
+
+  body.innerHTML = `
+    <div class="modal-section">
+      <div class="modal-section-header">🎬 Title & Hook <button class="modal-copy-btn" onclick="modalCopy(this, '${escapeForAttr((d.title||'') + '\n\n' + (d.hook||''))}')">Copy</button></div>
+      <div class="modal-section-body">TITLE: ${d.title||''}
+
+HOOK: ${d.hook||''}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-header">📜 Script <button class="modal-copy-btn" onclick="modalCopy(this, '${escapeForAttr(d.script||'')}')">Copy</button></div>
+      <div class="modal-section-body">${d.script||''}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-header">🎨 Image Prompts <button class="modal-copy-btn" onclick="modalCopy(this, '${escapeForAttr((d.imagePrompts||[]).join('\n\n'))}')">Copy</button></div>
+      <div class="modal-section-body mono">${(d.imagePrompts||[]).map((p,i)=>'SCENE '+(i+1)+':\n'+p).join('\n\n')}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-header">🎵 Music Prompt</div>
+      <div class="modal-section-body mono">${d.musicPrompt||''}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-header">📋 Description <button class="modal-copy-btn" onclick="modalCopy(this, '${escapeForAttr(d.description||'')}')">Copy</button></div>
+      <div class="modal-section-body">${d.description||''}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-header">🏷 Tags</div>
+      <div class="modal-tags">${tagsHtml}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-header">🖼 Thumbnail Brief</div>
+      <div class="modal-section-body mono">${d.thumbnailBrief||''}</div>
+    </div>
+  `;
+
+  document.getElementById('historyModal').className = 'modal-overlay active';
+}
+
+function escapeForAttr(str) {
+  return (str||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n').replace(/"/g,'&quot;');
+}
+
+function closeModal() {
+  document.getElementById('historyModal').className = 'modal-overlay';
+}
+
+function modalCopy(btn, text) {
+  const decoded = text.replace(/\\n/g,'\n').replace(/\\'/g,"'");
+  navigator.clipboard.writeText(decoded).then(() => {
+    btn.textContent = 'Copied!';
+    btn.className = 'modal-copy-btn copied';
+    setTimeout(() => { btn.textContent = 'Copy'; btn.className = 'modal-copy-btn'; }, 2000);
+  });
+}
+
+// Close modal on overlay click
+document.getElementById('historyModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Init history on load
+renderHistory();
+
 </script>
 </body>
 </html>
