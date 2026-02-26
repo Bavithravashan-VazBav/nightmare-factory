@@ -711,6 +711,134 @@
   }
   .modal-copy-btn:hover { border-color: var(--crimson); color: var(--crimson); }
   .modal-copy-btn.copied { border-color: #22c55e; color: #22c55e; }
+
+  /* VOICEOVER PLAYER */
+  .voice-card {
+    background: linear-gradient(135deg, #0f0f0f 0%, #080d12 100%);
+    border: 1px solid #0a1a2a;
+    border-left: 3px solid #1a4a8a;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .voice-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px;
+    align-items: center;
+  }
+  .voice-select {
+    flex: 1;
+    min-width: 160px;
+    background: #0d0d0d;
+    border: 1px solid #1a3a5a;
+    color: var(--bone);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    border-radius: 3px;
+  }
+  .voice-btn {
+    background: linear-gradient(135deg, #1a3a6a, #0d2040);
+    border: 1px solid #2a5a9a;
+    color: #8ab4d4;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .voice-btn:hover { background: linear-gradient(135deg, #1e4a8a, #102a50); box-shadow: 0 0 12px rgba(42,90,154,0.3); }
+  .voice-btn.playing { background: linear-gradient(135deg, #1a5a1a, #0d3010); border-color: #2a8a2a; color: #8ad48a; }
+  .voice-speed { width: 80px; }
+  .voice-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: #555;
+    padding: 0 16px 12px;
+    letter-spacing: 1px;
+  }
+
+  /* EXPORT BUTTONS */
+  .export-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px;
+  }
+  .export-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    text-align: center;
+    border: 1px solid;
+  }
+  .export-btn-srt {
+    background: linear-gradient(135deg, #1a2a0a, #0d1805);
+    border-color: #3a5a1a;
+    color: #8ab44a;
+  }
+  .export-btn-srt:hover { box-shadow: 0 0 12px rgba(58,90,26,0.4); transform: translateY(-1px); }
+  .export-btn-zip {
+    background: linear-gradient(135deg, #1a1a2a, #0d0d1a);
+    border-color: #3a3a8a;
+    color: #8a8ad4;
+  }
+  .export-btn-zip:hover { box-shadow: 0 0 12px rgba(58,58,138,0.4); transform: translateY(-1px); }
+  .export-btn-txt {
+    background: linear-gradient(135deg, #2a1a0a, #1a0d05);
+    border-color: #8a4a1a;
+    color: #d4944a;
+  }
+  .export-btn-txt:hover { box-shadow: 0 0 12px rgba(138,74,26,0.4); transform: translateY(-1px); }
+
+  /* MUSIC OPTIONS */
+  .music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    padding: 16px;
+  }
+  .music-chip {
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-radius: 3px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: #666;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .music-chip:hover, .music-chip.active {
+    border-color: var(--blood);
+    color: var(--crimson);
+    background: #1a0808;
+  }
+  .music-prompt-output {
+    padding: 0 16px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.6;
+    display: none;
+  }
+  .music-prompt-output.visible { display: block; }
+
 </style>
 </head>
 <body>
@@ -861,6 +989,59 @@
       <div class="card-body mono" id="thumbContent"></div>
     </div>
 
+
+    <!-- VOICEOVER PLAYER -->
+    <div class="voice-card">
+      <div class="card-header" style="border-bottom:1px solid #0a1a2a;background:linear-gradient(90deg,#080d12,#050810);">
+        <span class="card-title" style="color:#4a8ab4;">🎙 Built-in Voiceover Player (Free, No External Site)</span>
+      </div>
+      <div class="voice-controls">
+        <select class="voice-select" id="voiceSelect">
+          <option value="">Loading voices...</option>
+        </select>
+        <select class="voice-select voice-speed" id="voiceSpeed">
+          <option value="0.7">0.7x Slow</option>
+          <option value="0.85" selected>0.85x</option>
+          <option value="1.0">1.0x Normal</option>
+          <option value="1.1">1.1x Fast</option>
+        </select>
+        <button class="voice-btn" id="playBtn" onclick="toggleVoice()">▶ PLAY NARRATION</button>
+        <button class="voice-btn" onclick="downloadVoiceScript()">⬇ DOWNLOAD SCRIPT TXT</button>
+      </div>
+      <div class="voice-status" id="voiceStatus">Select a voice and click Play to hear your story narrated</div>
+    </div>
+
+    <!-- EXPORT PACKAGE -->
+    <div class="output-card">
+      <div class="card-header">
+        <span class="card-title">📦 Export Your Package</span>
+      </div>
+      <div class="export-row">
+        <button class="export-btn export-btn-srt" onclick="downloadSRT()">📄 Download SRT Subtitles</button>
+        <button class="export-btn export-btn-txt" onclick="downloadFullTXT()">📝 Download Full Script TXT</button>
+        <button class="export-btn export-btn-zip" onclick="downloadZIP()">📦 Download ZIP Package</button>
+      </div>
+    </div>
+
+    <!-- MUSIC OPTIONS -->
+    <div class="output-card">
+      <div class="card-header">
+        <span class="card-title">🎵 Music Mood Generator</span>
+        <button class="copy-btn" onclick="copyMusicPrompt()">Copy Prompt</button>
+      </div>
+      <div class="music-grid" id="musicGrid">
+        <div class="music-chip" onclick="selectMusic(this,'dark atmospheric orchestral horror, deep strings, no lyrics, slow tension building, cinematic')">🌑 Dark Orchestral</div>
+        <div class="music-chip" onclick="selectMusic(this,'creepy piano horror background, minor key, echoing notes, unsettling ambient, no lyrics')">🎹 Creepy Piano</div>
+        <div class="music-chip" onclick="selectMusic(this,'supernatural horror ambient, eerie wind sounds, distant choir, haunting, no lyrics')">👻 Supernatural</div>
+        <div class="music-chip" onclick="selectMusic(this,'psychological thriller music, tension building, staccato strings, no lyrics, intense')">🧠 Psychological</div>
+        <div class="music-chip" onclick="selectMusic(this,'deep woods horror ambient, nature sounds, owls, wind, distant growls, unsettling, no lyrics')">🌲 Deep Woods</div>
+        <div class="music-chip" onclick="selectMusic(this,'jump scare ready horror music, silent tension then sudden loud stinger, cinematic, no lyrics')">😱 Jump Scare</div>
+        <div class="music-chip" onclick="selectMusic(this,'gothic horror organ music, dark medieval, ominous, no lyrics, dramatic')">⛪ Gothic Organ</div>
+        <div class="music-chip" onclick="selectMusic(this,'digital glitch horror, distorted electronic, corrupted sounds, unsettling tech horror, no lyrics')">💻 Digital Glitch</div>
+      </div>
+      <div class="music-prompt-output" id="musicPromptOutput"></div>
+    </div>
+
     <!-- VIRAL SCORE -->
     <div class="output-card">
       <div class="card-header">
@@ -933,7 +1114,7 @@
     </div>
   </div>
 
-  <footer>nightmare factory v1.0 · built for your horror empire · start posting · get monetized</footer>
+  <footer>nightmare factory v2.0 · built for your horror empire · start posting · get monetized</footer>
 </div>
 
 <script>
@@ -1159,6 +1340,11 @@ function renderOutput(data) {
     }, 300);
   }
 
+  // Store current data for export/voiceover
+  currentScript = data.script || '';
+  currentPackageData = data;
+  loadVoices();
+
   // Save to history
   saveToHistory(data, document.getElementById('storyType').value);
 
@@ -1194,6 +1380,251 @@ function copySection(id) {
       btn.className = 'copy-btn';
     }, 2000);
   });
+}
+
+
+
+// ===== VOICEOVER PLAYER =====
+let currentUtterance = null;
+let isPlaying = false;
+let currentScript = '';
+
+function loadVoices() {
+  const sel = document.getElementById('voiceSelect');
+  if (!sel) return;
+  const voices = speechSynthesis.getVoices();
+  if (voices.length === 0) { setTimeout(loadVoices, 200); return; }
+  sel.innerHTML = '';
+  const preferred = ['Daniel','Google UK English Male','Microsoft David','Alex','Google US English','Microsoft Mark'];
+  let added = [];
+  // Add preferred voices first
+  voices.forEach(v => {
+    if (preferred.some(p => v.name.includes(p))) {
+      const o = document.createElement('option');
+      o.value = v.name; o.textContent = '⭐ ' + v.name + ' (' + v.lang + ')';
+      sel.appendChild(o); added.push(v.name);
+    }
+  });
+  // Add all others
+  voices.forEach(v => {
+    if (!added.includes(v.name) && v.lang.startsWith('en')) {
+      const o = document.createElement('option');
+      o.value = v.name; o.textContent = v.name + ' (' + v.lang + ')';
+      sel.appendChild(o);
+    }
+  });
+  if (sel.options.length === 0) {
+    voices.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v.name; o.textContent = v.name + ' (' + v.lang + ')';
+      sel.appendChild(o);
+    });
+  }
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function toggleVoice() {
+  if (isPlaying) {
+    speechSynthesis.cancel();
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶ PLAY NARRATION';
+    document.getElementById('playBtn').className = 'voice-btn';
+    document.getElementById('voiceStatus').textContent = 'Playback stopped.';
+    return;
+  }
+  if (!currentScript) {
+    document.getElementById('voiceStatus').textContent = '⚠ Generate a video package first!';
+    return;
+  }
+  const voices = speechSynthesis.getVoices();
+  const selectedName = document.getElementById('voiceSelect').value;
+  const voice = voices.find(v => v.name === selectedName);
+  const speed = parseFloat(document.getElementById('voiceSpeed').value);
+  // Clean script — remove [PAUSE] markers for TTS
+  const cleanScript = currentScript.replace(/\[PAUSE\]/g, '...').replace(/\[.*?\]/g, '');
+  // Split into chunks for better browser TTS handling
+  const chunks = cleanScript.match(/[^.!?]+[.!?]+/g) || [cleanScript];
+  let chunkIndex = 0;
+  isPlaying = true;
+  document.getElementById('playBtn').textContent = '⏹ STOP';
+  document.getElementById('playBtn').className = 'voice-btn playing';
+  document.getElementById('voiceStatus').textContent = '🎙 Playing narration... (' + chunks.length + ' sentences)';
+
+  function speakNext() {
+    if (!isPlaying || chunkIndex >= chunks.length) {
+      isPlaying = false;
+      document.getElementById('playBtn').textContent = '▶ PLAY NARRATION';
+      document.getElementById('playBtn').className = 'voice-btn';
+      document.getElementById('voiceStatus').textContent = '✅ Narration complete! ' + chunks.length + ' sentences played.';
+      return;
+    }
+    const utt = new SpeechSynthesisUtterance(chunks[chunkIndex].trim());
+    if (voice) utt.voice = voice;
+    utt.rate = speed;
+    utt.pitch = 0.85;
+    utt.onend = () => { chunkIndex++; speakNext(); };
+    utt.onerror = () => { chunkIndex++; speakNext(); };
+    speechSynthesis.speak(utt);
+    currentUtterance = utt;
+  }
+  speakNext();
+}
+
+function downloadVoiceScript() {
+  if (!currentScript) { alert('Generate a video package first!'); return; }
+  const blob = new Blob([currentScript], { type: 'text/plain' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'narration-script.txt'; a.click();
+}
+
+// ===== SRT SUBTITLE GENERATOR =====
+function generateSRT(script) {
+  const sentences = script.replace(/\[PAUSE\]/g,'').match(/[^.!?]+[.!?]+/g) || [];
+  let srt = '';
+  let time = 0;
+  sentences.forEach((s, i) => {
+    const words = s.trim().split(' ').length;
+    const duration = Math.max(2, words * 0.45); // ~0.45 sec per word at slow pace
+    const start = formatSRTTime(time);
+    const end = formatSRTTime(time + duration);
+    srt += (i + 1) + '\n' + start + ' --> ' + end + '\n' + s.trim() + '\n\n';
+    time += duration + 0.3;
+  });
+  return srt;
+}
+
+function formatSRTTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  const ms = Math.floor((seconds % 1) * 1000);
+  return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0') + ',' + String(ms).padStart(3,'0');
+}
+
+function downloadSRT() {
+  if (!currentScript) { alert('Generate a video package first!'); return; }
+  const srt = generateSRT(currentScript);
+  const blob = new Blob([srt], { type: 'text/plain' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'subtitles.srt'; a.click();
+}
+
+// ===== FULL TXT DOWNLOAD =====
+let currentPackageData = null;
+function downloadFullTXT() {
+  if (!currentPackageData) { alert('Generate a video package first!'); return; }
+  const d = currentPackageData;
+  const txt = [
+    '=== NIGHTMARE FACTORY — VIDEO PACKAGE ===',
+    'Generated: ' + new Date().toLocaleString(),
+    '',
+    '=== YOUTUBE TITLE ===',
+    d.title || '',
+    '',
+    '=== HOOK ===',
+    d.hook || '',
+    '',
+    '=== FULL SCRIPT ===',
+    d.script || '',
+    '',
+    '=== IMAGE PROMPTS (Leonardo.ai) ===',
+    (d.imagePrompts || []).map((p,i) => 'SCENE '+(i+1)+': '+p).join('\n\n'),
+    '',
+    '=== MUSIC PROMPT (Suno.ai) ===',
+    d.musicPrompt || '',
+    '',
+    '=== YOUTUBE DESCRIPTION ===',
+    d.description || '',
+    '',
+    '=== YOUTUBE TAGS ===',
+    (d.tags || []).join(', '),
+    '',
+    '=== THUMBNAIL BRIEF ===',
+    d.thumbnailBrief || '',
+    '',
+    '=== SUBTITLES (SRT) ===',
+    generateSRT(d.script || '')
+  ].join('\n');
+  const blob = new Blob([txt], { type: 'text/plain' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'video-package.txt'; a.click();
+}
+
+// ===== ZIP DOWNLOAD =====
+async function downloadZIP() {
+  if (!currentPackageData) { alert('Generate a video package first!'); return; }
+  const d = currentPackageData;
+  // Build files
+  const files = {
+    'script.txt': d.script || '',
+    'youtube-title.txt': (d.title || '') + '\n\nHOOK:\n' + (d.hook || ''),
+    'youtube-description.txt': d.description || '',
+    'youtube-tags.txt': (d.tags || []).join('\n'),
+    'image-prompts.txt': (d.imagePrompts || []).map((p,i) => 'SCENE '+(i+1)+':\n'+p).join('\n\n'),
+    'music-prompt.txt': d.musicPrompt || '',
+    'thumbnail-brief.txt': d.thumbnailBrief || '',
+    'subtitles.srt': generateSRT(d.script || ''),
+    'README.txt': [
+      'NIGHTMARE FACTORY — VIDEO PRODUCTION PACKAGE',
+      '=============================================',
+      '',
+      'FILES IN THIS PACKAGE:',
+      '• script.txt          → Your full narration script',
+      '• youtube-title.txt   → Video title + hook',
+      '• youtube-description.txt → Copy-paste YouTube description',
+      '• youtube-tags.txt    → One tag per line for YouTube',
+      '• image-prompts.txt   → Paste each into Leonardo.ai',
+      '• music-prompt.txt    → Paste into Suno.ai',
+      '• thumbnail-brief.txt → Design guide for Canva',
+      '• subtitles.srt       → Drag into CapCut for auto-captions',
+      '',
+      'WORKFLOW:',
+      '1. Paste script.txt into ttsmp3.com or use dashboard voiceover',
+      '2. Paste image prompts into leonardo.ai → download images',
+      '3. Paste music prompt into suno.ai → download MP3',
+      '4. Open CapCut → import images + voice + music',
+      '5. Drag subtitles.srt → captions auto-placed',
+      '6. Export video → upload to YouTube with title/desc/tags',
+      '',
+      'Generated: ' + new Date().toLocaleString()
+    ].join('\n')
+  };
+
+  // Simple ZIP using manual ZIP construction
+  try {
+    const { default: JSZip } = await import('https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm');
+    const zip = new JSZip();
+    const folder = zip.folder('video-package');
+    Object.entries(files).forEach(([name, content]) => folder.file(name, content));
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'nightmare-factory-package.zip'; a.click();
+  } catch(e) {
+    // Fallback: download as single TXT if JSZip fails
+    downloadFullTXT();
+    alert('ZIP download fell back to TXT — all content included!');
+  }
+}
+
+// ===== MUSIC MOOD SELECTOR =====
+let selectedMusicPrompt = '';
+function selectMusic(el, prompt) {
+  document.querySelectorAll('.music-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  selectedMusicPrompt = prompt;
+  const out = document.getElementById('musicPromptOutput');
+  out.textContent = '→ SUNO PROMPT: ' + prompt;
+  out.className = 'music-prompt-output visible';
+}
+
+function copyMusicPrompt() {
+  const prompt = selectedMusicPrompt || document.getElementById('musicContent').textContent;
+  if (!prompt) { alert('Select a music mood or generate a package first!'); return; }
+  navigator.clipboard.writeText(prompt);
+  const btn = document.querySelector('.output-card .copy-btn[onclick="copyMusicPrompt()"]');
+  if (btn) { btn.textContent = 'Copied!'; btn.className = 'copy-btn copied'; setTimeout(()=>{ btn.textContent='Copy Prompt'; btn.className='copy-btn'; }, 2000); }
 }
 
 
